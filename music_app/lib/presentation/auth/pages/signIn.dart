@@ -4,11 +4,16 @@ import 'package:music_app/common/widgets/appbar/app_bar.dart';
 import 'package:music_app/common/widgets/buttons/basic_app_button.dart';
 import 'package:music_app/core/assets/app_vectors.dart';
 import 'package:music_app/core/configs/themes/app_colors.dart';
+import 'package:music_app/data/models/auth/signin_user_rq.dart';
+import 'package:music_app/domain/usecases/auth/signin.dart';
 import 'package:music_app/presentation/auth/pages/signUp.dart';
+import 'package:music_app/presentation/root/pages/root.dart';
+import 'package:music_app/service_locator.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
-
+  SignInPage({super.key});
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +41,27 @@ class SignInPage extends StatelessWidget {
             _passwordField(context),
             const SizedBox(height: 20,),
             BasicAppButton(
-              onPressed: () {},
+              onPressed: () async{
+                var result = await sl<SigninUseCase>().call(
+                  params: SigninUserRq(
+                    email: _email.text.toString(),
+                    password: _password.text.toString()
+                  )
+                );
+                result.fold(
+                  (l) {
+                    var snackbar = SnackBar(content: Text(l, style: const TextStyle(color: Colors.black),));
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  },
+                  (r) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) => const RootPage()),
+                      (route) => false
+                    );
+                  }
+                );
+              },
               title: 'Log in',
             ),
             const SizedBox(height: 20), // Add some space at the bottom
@@ -60,6 +85,7 @@ class SignInPage extends StatelessWidget {
 
   Widget _emailField(BuildContext context) {
     return TextField(
+      controller: _email,
       cursorColor: AppColors.primary,
       decoration: const InputDecoration(hintText: 'Enter email').applyDefaults(
         Theme.of(context).inputDecorationTheme,
@@ -69,6 +95,7 @@ class SignInPage extends StatelessWidget {
 
   Widget _passwordField(BuildContext context) {
     return TextField(
+      controller: _password,
       cursorColor: AppColors.primary,
       decoration: const InputDecoration(hintText: 'Password').applyDefaults(
         Theme.of(context).inputDecorationTheme,
@@ -91,7 +118,7 @@ class SignInPage extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-              builder: (BuildContext context) => const SignUpPage() 
+              builder: (BuildContext context) => SignUpPage() 
               )
             );
           },
