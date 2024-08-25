@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1056107213938",
+    "project_id": "spotify-kannan",
+    "storage_bucket": "spotify-kannan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056107213938:android:215ca61bb37f3b477e3eeb",
+        "android_client_info": {
+          "package_name": "com.example.music_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy-3wlMmhQQxo0Y_uIuPwiLfPzlXmzzC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
