@@ -41,6 +41,11 @@ dependencies:
   path_provider:
   firebase_core:
   firebase_auth:
+  cloud_firestore:
+  firebase_storage:
+  firebase_app_check: ^0.3.0+5
+  audioplayers: ^6.1.0
+  metadata:
   get_it:
   dartz:
 
@@ -99,3 +104,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+location:
+  git:
+    url: https://github.com/781flyingdutchman/flutterlocation.git
+    ref: V4
+    path: packages/location
